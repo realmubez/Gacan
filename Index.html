@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Under Maintenance | GacanQabad</title>
+
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    /* ---------------- THEME VARIABLES ---------------- */
+    :root[data-theme="dark"] {
+      --bg-color: #0b1120;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --box-bg: #0f172a;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --badge-bg: rgba(59, 130, 246, 0.15);
+      --badge-border: rgba(59, 130, 246, 0.3);
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    :root[data-theme="light"] {
+      --bg-color: #f1f5f9;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --box-bg: #f8fafc;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --badge-bg: #eff6ff;
+      --badge-border: #bfdbfe;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(0.75rem, 3vw, 2rem);
+      line-height: 1.5;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* ---------------- THEME TOGGLE ---------------- */
+    .top-bar {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.75rem;
+    }
+
+    .theme-toggle-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem 0.85rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .theme-toggle-btn i {
+      font-size: 1rem;
+      color: var(--primary);
+    }
+
+    /* ---------------- MAIN CARD ---------------- */
+    .maintenance-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: clamp(1.25rem, 4vw, 2.5rem);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .icon-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-size: 1.6rem;
+    }
+
+    h1 {
+      font-size: clamp(1.35rem, 4vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .lead {
+      font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+      font-weight: 500;
+      margin-bottom: 0.65rem;
+      color: var(--text-main);
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+    }
+
+    /* ---------------- COUNTDOWN GRID ---------------- */
+    .countdown-section {
+      margin: 1.25rem 0;
+    }
+
+    .countdown-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(0.35rem, 1.5vw, 0.75rem);
+    }
+
+    .countdown-box {
+      background: var(--box-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: clamp(0.5rem, 2vw, 0.85rem) 0.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .countdown-val {
+      font-size: clamp(1.2rem, 3.8vw, 1.65rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown-lbl {
+      font-size: clamp(0.62rem, 1.8vw, 0.72rem);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---------------- CONTACT BOX ---------------- */
+    .contact-box {
+      background-color: var(--box-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: clamp(0.75rem, 2vw, 1rem);
+      margin: 1.1rem 0;
+      font-size: clamp(0.82rem, 2vw, 0.9rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-box i {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .contact-box a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .contact-box a:hover {
+      text-decoration: underline;
+    }
+
+    .signoff {
+      margin-top: 1rem;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar with Dark / Light Switcher -->
+  <div class="top-bar">
+    <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
+      <i class="bi bi-sun" id="themeIcon"></i>
+      <span id="themeText">Light</span>
+    </button>
+  </div>
+
+  <main class="maintenance-card">
+    <div class="icon-badge">
+      <i class="bi bi-tools"></i>
+    </div>
+
+    <h1>We'll Be Back Soon!</h1>
+    
+    <p class="lead">We're currently performing scheduled maintenance to improve your learning experience.</p>
+    
+    <p>Our team is working to get everything back up and running as soon as possible. Thank you for your patience and understanding.</p>
+
+    <!-- 30-Day Countdown -->
+    <div class="countdown-section">
+      <div class="countdown-title">
+        <i class="bi bi-clock-history"></i> Estimated Launch Countdown
+      </div>
+      <div class="countdown-grid">
+        <div class="countdown-box">
+          <span class="countdown-val" id="days">30</span>
+          <span class="countdown-lbl">Days</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-val" id="hours">00</span>
+          <span class="countdown-lbl">Hours</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-val" id="minutes">00</span>
+          <span class="countdown-lbl">Minutes</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-val" id="seconds">00</span>
+          <span class="countdown-lbl">Seconds</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="contact-box">
+      <i class="bi bi-envelope-at"></i>
+      <span>If you need assistance or would like more information, contact us at 
+        <a href="mailto:info@gacanqabad.com">info@gacanqabad.com</a>.
+      </span>
+    </div>
+
+    <p>We apologize for the inconvenience and look forward to welcoming you back soon.</p>
+
+    <div class="signoff">
+      <i class="bi bi-mortarboard-fill" style="color: var(--primary);"></i> — The GacanQabad Team
+    </div>
+  </main>
+
+  <script>
+    /* ================= THEME TOGGLE SCRIPT ================= */
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        themeIcon.className = 'bi bi-sun';
+        themeText.textContent = 'Light';
+      } else {
+        themeIcon.className = 'bi bi-moon-stars';
+        themeText.textContent = 'Dark';
+      }
+      try {
+        localStorage.setItem('gq_theme', theme);
+      } catch (e) {
+        // Safe fallback if localStorage is blocked
+      }
+    }
+
+    // Initialize Theme
+    let savedTheme = 'dark';
+    try {
+      savedTheme = localStorage.getItem('gq_theme') || 'dark';
+    } catch (e) {}
+    applyTheme(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = root.getAttribute('data-theme');
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+
+    /* ================= COUNTDOWN SCRIPT ================= */
+    (function initCountdown() {
+      const STORAGE_KEY = 'gacanqabad_maintenance_deadline';
+      const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+      let deadline;
+
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored && !isNaN(parseInt(stored, 10))) {
+          deadline = parseInt(stored, 10);
+        } else {
+          deadline = Date.now() + THIRTY_DAYS_MS;
+          localStorage.setItem(STORAGE_KEY, deadline);
+        }
+      } catch (e) {
+        // Fallback for sandboxed webviews
+        deadline = Date.now() + THIRTY_DAYS_MS;
+      }
+
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+
+      function padZero(num) {
+        return String(num).padStart(2, '0');
+      }
+
+      function updateTimer() {
+        const now = Date.now();
+        const diff = deadline - now;
+
+        if (diff <= 0) {
+          daysEl.textContent = '00';
+          hoursEl.textContent = '00';
+          minutesEl.textContent = '00';
+          secondsEl.textContent = '00';
+          clearInterval(timerInterval);
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        daysEl.textContent = padZero(days);
+        hoursEl.textContent = padZero(hours);
+        minutesEl.textContent = padZero(minutes);
+        secondsEl.textContent = padZero(seconds);
+      }
+
+      updateTimer();
+      const timerInterval = setInterval(updateTimer, 1000);
+    })();
+  </script>
+</body>
+</html>
